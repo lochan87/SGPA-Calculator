@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <title>SGPA Calculator</title>
+  <link rel="stylesheet" href="style.css"> <!--CSS Styling -->
+</head>
+<body>
+  <h1>SGPA Calculator</h1>
+  <div class="container">
+    <form onsubmit="return false"><!--Inputs of calculator taken through form-->
+      <div>
+        <label>Subject - 1</label>
+        <input type="number" min="0" max="30" id="s1c" placeholder="No. of Credits" required>
+        <input type="number" min="0" max="100" id="s1m" placeholder="Marks Obtained" required>
+      </div>
+      <div>
+        <label>Subject - 2</label>
+        <input type="number" min="0" max="30" id="s2c" placeholder="No. of Credits" required>
+        <input type="number" min="0" max="100" id="s2m" placeholder="Marks Obtained" required>
+      </div>
+      <div>
+        <label>Subject - 3</label>
+        <input type="number" min="0" max="30" id="s3c" placeholder="No. of Credits" required>
+        <input type="number" min="0" max="100" id="s3m" placeholder="Marks Obtained" required>
+      </div>
+      <div>
+        <label>Subject - 4</label>
+        <input type="number" min="0" max="30" id="s4c" placeholder="No. of Credits" required>
+        <input type="number" min="0" max="100" id="s4m" placeholder="Marks Obtained" required>
+      </div>
+      <div>
+        <label>Subject - 5</label>
+        <input type="number" min="0" max="30" id="s5c" placeholder="No. of Credits" required>
+        <input type="number" min="0" max="100" id="s5m" placeholder="Marks Obtained" required>
+      </div>
+      <div>
+        <label>Subject - 6</label>
+        <input type="number" min="0" max="30" id="s6c" placeholder="No. of Credits" required>
+        <input type="number" min="0" max="100" id="s6m" placeholder="Marks Obtained" required>
+      </div>
+      <div>
+        <label>Subject - 7</label>
+        <input type="number" min="0" max="30" id="s7c" placeholder="No. of Credits">
+        <input type="number" min="0" max="100" id="s7m" placeholder="Marks Obtained">
+      </div>
+      <div>
+        <label>Subject - 8</label>
+        <input type="number" min="0" max="30" id="s8c" placeholder="No. of Credits">
+        <input type="number" min="0" max="100" id="s8m" placeholder="Marks Obtained">
+      </div>
+      <button class="btn" type="submit" onclick="getsgpa()">Calculate</button>
+    </form>
+  </div>
+  <div id="result" style="text-align: center; margin-top: 20px; font-size: 20px;"></div>
+  <!--Simple Javascript code to calculate SGPA and display it-->
+  <script>
+    function getsgpa()
+    {
+      var c=[];
+      var m=[];
+      for(var i=0;i<8;i++)
+      {
+        var s1="s"+(i+1)+"c";
+        c[i]=parseFloat(document.getElementById(s1).value);
+        var c1="s"+(i+1)+"m";
+        m[i]=parseFloat(document.getElementById(c1).value);
+        if((isNaN(c[i])&&!isNaN(m[i]))||(!isNaN(c[i])&&isNaN(m[i])))
+        {
+            alert("Please enter valid input");
+            return;
+        }
+      }
+      var res=calc(c,m);
+      document.getElementById("result").innerHTML="SGPA: "+res;
+    }
+    function calc(cre,mar)
+    {
+      var sgpa=0;
+      var s=0;
+      for(var i=0;i<8;i++)
+      {
+        if(((mar[i]==0 && cre[i]==0)||(isNaN(mar[i])&&isNaN(cre[i])))&& i>5)
+              continue;
+        if(mar[i]<40)
+        { 
+          sgpa=sgpa+(cre[i]*0);
+          makered(i+1);
+        }
+        else if(mar[i]<45 && mar[i]>=40)
+          sgpa=sgpa+(cre[i]*4);
+        else if(mar[i]<50 && mar[i]>=45)
+          sgpa=sgpa+(cre[i]*5);
+        else if(mar[i]<60 && mar[i]>=50)
+          sgpa=sgpa+(cre[i]*6);
+        else if(mar[i]<70 && mar[i]>=60)
+          sgpa=sgpa+(cre[i]*7);
+        else if(mar[i]<80 && mar[i]>=70)
+          sgpa=sgpa+(cre[i]*8);
+        else if(mar[i]<90 && mar[i]>=80)
+          sgpa=sgpa+(cre[i]*9);
+        else if(mar[i]>=90)
+          sgpa=sgpa+(cre[i]*10);
+        s=s+cre[i];  
+      }
+      return (sgpa/s).toFixed(2);
+    }
+    function makered(index)
+    {
+      var x = document.getElementById("s"+index+"c");
+      var y = document.getElementById("s"+index+"m");
+      x.style.background = "#d2c0c0";
+      x.style.border = "1px solid #ff0000";
+      y.style.background = "#d2c0c0";
+      y.style.border = "1px solid #ff0000";
+    }
+  </script>
+</body>
+</html>
